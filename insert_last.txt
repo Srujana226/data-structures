@@ -1,0 +1,55 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+    int data;
+    struct node*link;
+ };
+void display(struct node *head);
+void insert_last(struct node*head,int data);
+void main()
+{
+struct node *head = (struct node*)malloc(sizeof(struct node*));
+head->data = 10;
+head->link = NULL;
+struct node *current = (struct node*)malloc(sizeof(struct node*));
+current->data = 20;
+current->link = NULL;
+head->link = current;
+current = (struct node*)malloc(sizeof(struct node*));
+current->data = 30;
+current->link = NULL;
+head->link->link = current;
+current = (struct node*)malloc(sizeof(struct node*));
+current->data = 40;
+current->link = NULL;
+head->link->link->link = current;
+printf("before insertion");
+display(head);
+printf("\nafter insertion");
+insert_last(head,60);
+display(head);
+}
+void display(struct node *head)
+{
+	struct node* temp = head;
+	while (temp != NULL) 
+	{
+	printf("%d->", temp->data);
+	temp = temp->link;
+	}
+}
+void insert_last(struct node *head,int data)
+{
+    struct node*temp=NULL;
+    temp=head;
+    struct node*new=(struct node*)malloc(sizeof(struct node));
+    new->data=data;
+    new->link=NULL;
+    printf("succesfull");
+    while(temp->link!=NULL)
+    {
+        temp=temp->link;
+    }
+    temp->link=new;
+}
