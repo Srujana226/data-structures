@@ -1,0 +1,120 @@
+
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+        struct node *prev_link;
+        int data;
+        struct node *next_link;
+};
+struct node* delete_last(struct node *head);
+struct node* delete_random(struct node *head);
+struct node* delete_begin(struct node *head);
+void display(struct node *head);
+int main()
+{
+        struct node *head = (struct node*)malloc(sizeof(struct node));
+        head->prev_link = NULL;
+        head->data = 10;
+        head->next_link = NULL;
+        struct node *current = (struct node*)malloc(sizeof(struct node));
+        current->prev_link=NULL;
+        current->data = 20;
+        current->next_link=NULL;
+        head->next_link=current;
+        current->prev_link=head;
+        current = (struct node*)malloc(sizeof(struct node));
+        current->prev_link = NULL;
+        current->data = 30;
+        current->next_link = NULL;
+        head->next_link->next_link = current;
+        current->prev_link = head;
+        current = (struct node*)malloc(sizeof(struct node));
+        current->prev_link = NULL;
+        current->data = 40;
+        current->next_link = NULL;
+        head->next_link->next_link->next_link= current;
+        current->prev_link = head;
+        printf("double linked list = ");
+        display(head);
+	printf("\nafter deletion at begin = ");
+	head = delete_begin(head);
+	display(head);
+	printf("\nafter deletion at random = ");
+	head = delete_random(head);
+	display(head);
+	printf("\nafter deletion at last = ");
+	head = delete_last(head);
+	display(head);
+}
+void display(struct node *head)
+{
+        struct node *temp = head;
+        while(temp!=NULL)
+        {
+                printf("%d<=>",temp->data);
+                temp=temp->next_link;
+                }
+ }
+struct node* delete_begin(struct node *head)
+{	
+	struct node *temp = head;
+	if(temp == NULL)
+	{
+		printf("linked list is empty");
+	}
+	head = head->next_link;
+	free(temp);
+	temp=NULL;
+	return head;
+	
+}
+struct node* delete_random(struct node *head)
+{
+	struct node *temp = head;
+	struct node *new;
+	new = NULL;
+	int pos = 2;
+	if(head == NULL)
+		printf("empty linked list");
+	else if(pos==1)
+	{
+		head=temp->next_link;
+		free(temp);
+		temp=NULL;
+	}
+	else
+	{
+		while(pos!=1)
+		{
+			new = temp;
+			temp = temp->next_link;
+			pos--;
+		}
+	new->next_link=temp->next_link;
+	free(temp);
+	}
+	return head;
+}
+struct node* delete_last(struct node *head)
+{
+	struct node *temp = head;
+	if(temp == NULL)
+		printf("empty linked list");
+	else if(temp->next_link==NULL)
+	{
+		head=temp->next_link;
+		free(temp);
+		head=NULL;
+	}
+	else
+	{
+		while(temp->next_link = NULL)
+		{
+			temp = temp->next_link;
+		}
+	free(temp->next_link);
+	temp->next_link = NULL;
+	}
+	return head;
+}
