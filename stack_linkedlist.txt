@@ -1,0 +1,87 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+	int data;
+	struct node* link;
+}*top=NULL;
+int isEmpty()
+{
+	return top==NULL;
+}
+int push(int value)
+{
+	struct node *new=(struct node*)malloc(sizeof(struct node));
+	new->data=value;
+	new->link=NULL;
+	new->link=top;
+	top=new;
+	return top->data;
+	
+}
+int pop()
+{
+	if(isEmpty())
+	{
+		printf("stack is empty");
+	}
+	else
+	{
+		struct node *temp=top;
+		top=temp->link;
+		free(temp);
+		temp=NULL;
+	}
+}
+int peek()
+{
+	if(isEmpty())
+	{
+		printf("stack is empty");
+	}
+	else
+	{
+		return top->data;
+	}
+}
+void display()
+{
+	struct node *temp=top;
+	if(isEmpty())
+	{
+		printf("stack is empty");
+	}
+	else
+	{
+		while(temp)
+		{
+			printf("\n %d",temp->data);
+			temp=temp->link;
+		}
+	printf("\n");
+	}
+}
+
+int main()
+{
+	push(10);
+	push(20);
+	push(30);
+	printf("\ninitial stack values");
+	display();
+	printf("Top value=%d\n",peek());
+	printf("\nPop element is %d",pop());
+	display();
+	printf("\nPop element is %d",pop());
+	display();
+	printf("\nAfter pop elements");
+	display();
+	if(isEmpty())
+	{
+		printf("stack is empty");
+	}
+	else
+	{
+		printf("stack is not empty");
+	}
+}

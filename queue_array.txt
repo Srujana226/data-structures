@@ -1,0 +1,83 @@
+#include<stdio.h>
+#define MAXSIZE 7
+int queue[MAXSIZE];
+int rear=-1;
+int front=-1;
+int isempty();
+int enqueue(int data);
+int dequeue();
+int frontvalue();
+int isfull();
+
+int isempty()
+{
+	return rear==-1;
+}
+int isfull()
+{
+	return rear==MAXSIZE-1;
+}
+int enqueue(int data)
+{
+	if(isfull())
+		printf("queue is full");
+         else
+         {
+		 return queue[++rear]=data;
+		}
+}
+int dequeue()
+{
+		 
+	if(isempty())
+		printf("queue is empty");
+	else if(front==rear)
+        {
+		front=-1;
+	}
+	else
+	{
+		front++;
+		return queue[rear-1];
+	}
+}
+int frontvalue()
+{	
+	if(isempty())
+		printf("Queue is empty");
+	else
+		return queue[front];
+}
+int display()
+{
+		     
+	if(isempty())
+	 {
+		printf("queue is empty");
+	 }
+	 else
+	{
+		for(int i=front;i<=rear;i++)
+		{
+			printf("%d\n",queue[i]);
+		}
+	}
+}
+int main()
+{
+	enqueue(10);
+	enqueue(20);
+	enqueue(30);
+	enqueue(40);
+	printf("intital queue elements are:\n");
+	display();
+	printf("elements after dequeue are:\n");
+	dequeue();
+	dequeue();
+	dequeue();
+	display();
+	if (isempty())
+		printf("Queue is empty");
+	else
+		printf("Queue is not empty");
+}

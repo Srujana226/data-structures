@@ -1,0 +1,99 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node
+{
+	int data;
+	struct node *link;
+};
+struct node *front=NULL;
+struct node *rare=NULL;
+int Empty();
+int dequeue();
+int Enqueue(int value);
+void display();
+int front_value();
+
+int isEmpty()
+{
+	return front==NULL;
+}
+int Enqueue(int value)
+{
+	struct node *new=(struct node*)malloc(sizeof(struct node));
+	new->data=value;
+	new->link=NULL;
+    if(rare==NULL)
+    {
+           rare=new;
+	  front=new; 
+           
+    }
+    else
+    {
+	struct node *temp=rare;
+      while(temp->link!=NULL)
+      {
+         temp=temp->link;	      
+	    
+     }
+      temp->link=new;
+ }
+}
+int dequeue()
+ {    
+	struct node *temp=front;
+      if(isEmpty())
+      {
+      
+      printf("queue is empty");
+      }
+     else
+     {   front=temp->link;
+	  free(temp);
+
+	  return front->data-1;
+     }
+}
+int front_value()
+{
+	if(isEmpty())
+	printf("queue is empty");
+	else
+	{
+		return front->data;
+
+	}
+}
+void display()
+{
+	if(isEmpty())
+	{
+            printf("queue is empty\n");
+	}
+	else
+	{
+	struct node *temp=NULL;
+      temp=front;
+      while(temp!=NULL)
+      {
+	      printf("%d  ",temp->data);
+	      printf("\n");
+	      temp=temp->link;
+      }
+	}
+}
+int main()
+{
+  Enqueue(10);
+  Enqueue(20);
+  Enqueue(30);
+  Enqueue(40);
+  printf("initial queue elements are\n");
+  display();
+  dequeue();
+  dequeue();
+  printf("elements after dequeue operation\n");
+  display();
+return 0;
+}
