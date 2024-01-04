@@ -1,0 +1,132 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+    int data;
+    struct node *link;
+};
+struct node *delete_last(struct node *head);
+struct node *delete_random(struct node *head);
+struct node *delete_begin(struct node *head);
+void display(struct node *head);
+
+int main()
+{
+    
+    struct node *head=(struct node*)malloc(sizeof(struct node));
+    head->data=10;
+    head->link=NULL;
+    struct node *current=(struct node*)malloc(sizeof(struct node));
+    current->data=20;
+    current->link=NULL;
+    head->link=current;
+    current=malloc(sizeof(struct node));
+    current->data=30;
+    current->link=NULL;
+    head->link->link=current;
+    current=malloc(sizeof(struct node));
+    current->data=40;
+    current->link=NULL;
+    head->link->link->link=current;
+    current->link=head;
+    printf("Circular linked list before deletion: ");
+    display(head);
+    head=delete_begin(head);
+    printf("\nCircular linked list after deletion at begining : ");
+    display(head);
+    head=delete_random(head);
+    printf("\nCircular linked list after deletion at random : ");
+    display(head);
+    head=delete_last(head);
+    printf("\nCircular linked list after deletion at last : ");
+    display(head);
+}
+void display(struct node *head)
+{
+    struct node *temp=head;
+    do{
+        printf("%d ",temp->data);
+        temp=temp->link;
+    }while(temp!=head);
+    printf("%d",temp->data);
+}
+struct node *delete_begin(struct node *head)
+{
+    if (head==NULL) {
+        printf("List is empty. Cannot delete.\n");
+        return NULL;
+    }
+
+    struct node *temp = head;
+
+    while (temp->link != head) {
+        temp = temp->link;
+    }
+
+    struct node *temp2 = head->link;
+    temp->link = temp2;
+    free(head);
+    head = temp2;
+
+    return head;
+}
+
+
+struct node *delete_last(struct node *head)
+{
+    if (head==NULL) {
+        printf("List is empty. Cannot delete.\n");
+        return NULL;
+    }
+
+    struct node *temp = head;
+    struct node *prev = NULL;
+
+    while (temp->link != head) {
+        prev = temp;
+        temp = temp->link;
+    }
+
+    if (temp == head) {
+        free(temp);
+        return NULL;
+    }
+
+    prev->link = head;
+    free(temp);
+
+    return head;
+}
+
+struct node* delete_random(struct node *head)
+{
+    int pos;
+    if (head==NULL) {
+        printf("List is empty. Cannot delete.\n");
+        return NULL;
+    }
+
+    if (pos == 1) {
+    
+        return delete_begin(head);
+    }
+
+    struct node *temp = head;
+    struct node *prev = NULL;
+    int count = 1;
+    while (temp->link != head && count < pos) {
+        prev = temp;
+        temp = temp->link;
+        count++;
+    }
+
+    if (count < pos) {
+        printf("Position %d not found in the list.\n", pos);
+        return head;
+    }
+
+    prev->link = temp->link;
+    free(temp);
+
+    return head;
+}

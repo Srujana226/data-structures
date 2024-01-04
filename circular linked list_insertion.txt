@@ -1,0 +1,113 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+    int data;
+    struct node *link;
+};
+struct node *insert_last(struct node *head);
+struct node *insert_random(struct node *head);
+struct node *insert_begin(struct node *head);
+void display(struct node *head);
+
+int main()
+{
+    
+    struct node *head=(struct node*)malloc(sizeof(struct node));
+    head->data=10;
+    head->link=NULL;
+    struct node *current=(struct node*)malloc(sizeof(struct node));
+    current->data=20;
+    current->link=NULL;
+    head->link=current;
+    current=malloc(sizeof(struct node));
+    current->data=30;
+    current->link=NULL;
+    head->link->link=current;
+    current=malloc(sizeof(struct node));
+    current->data=40;
+    current->link=NULL;
+    head->link->link->link=current;
+    current->link=head;
+    printf("Circular linked list before insertion: ");
+    display(head);
+    head=insert_begin(head);
+    printf("\nCircular linked list after insertion at begining : ");
+    display(head);
+    head=insert_random(head);
+    printf("\nCircular linked list after insertion at random : ");
+    display(head);
+    head=insert_last(head);
+    printf("\nCircular linked list after insertion at last : ");
+    display(head);
+}
+void display(struct node *head)
+{
+    struct node *temp=head;
+    do{
+        printf("%d ",temp->data);
+        temp=temp->link;
+    }while(temp!=head);
+    printf("%d",temp->data);
+}
+struct node* insert_begin(struct node *head)
+{
+    int data;
+    printf("\nEnter data for beginning node:");
+    scanf("%d",&data);
+    struct node *temp=head;
+    struct node* new=malloc(sizeof(struct node));
+    new->data=data;
+    new->link=temp;
+    //head=new;
+    while(temp->link!=head){
+        temp=temp->link;
+    }
+    temp->link=new;
+    //new->link=temp;
+    temp=new;
+    
+    return temp;
+}
+
+struct node *insert_last(struct node *head)
+{
+    int data;
+    printf("\nEnter data for end node:");
+    scanf("%d",&data);
+    struct node* new=malloc(sizeof(struct node));
+    new->data=data;
+    new->link=NULL;
+    struct node *temp=head;
+    while(temp->link!=head)
+    {
+        temp=temp->link;
+    }
+    temp->link=new;
+    new->link=head;
+    //new->link=head;
+    
+    return head;
+}
+
+struct node* insert_random(struct node* head)
+{
+    int pos=3;
+    int data;
+    printf("\nEnter data for random node:");
+    scanf("%d",&data);
+    struct node* new=malloc(sizeof(struct node));
+    struct node *temp=head;
+    new->data=data;
+    new->link=NULL;
+    
+    while(pos!=1)
+    {
+        temp=temp->link;
+        pos--;
+    }
+    new->link=temp->link;
+    temp->link=new;
+
+    return head;
+}
