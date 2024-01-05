@@ -1,23 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct Node 
+struct node 
 {
-    struct Node* left;
+    struct node* left;
     int data;
-    struct Node* right;
+    struct node* right;
 };
 
-struct Node* createNode(int key) {
-    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
-    newNode->data = key;
-    newNode->left = newNode->right = NULL;
-    return newNode;
+struct node* createnode(int key) {
+    struct node* newnode = (struct node*)malloc(sizeof(struct node));
+    newnode->data = key;
+    newnode->left = newnode->right = NULL;
+    return newnode;
 }
 
-struct Node* insert(struct Node* root, int key) {
+struct node* insert(struct node* root, int key) {
     if (root == NULL) {
-        return createNode(key);
+        return createnode(key);
     }
 
     if (key < root->data) {
@@ -29,32 +29,32 @@ struct Node* insert(struct Node* root, int key) {
     return root;
 }
 
-void inorderTraversal(struct Node* root) {
+void inordertraversal(struct node* root) {
     if (root != NULL) {
-        inorderTraversal(root->left);
+        inordertraversal(root->left);
         printf("%d ", root->data);
-        inorderTraversal(root->right);
+        inordertraversal(root->right);
     }
 }
 
-void preorderTraversal(struct Node* root) {
+void preordertraversal(struct node* root) {
     if (root != NULL) {
         printf("%d ", root->data);
-        preorderTraversal(root->left);
-        preorderTraversal(root->right);
+        preordertraversal(root->left);
+        preordertraversal(root->right);
     }
 }
 
-void postorderTraversal(struct Node* root) {
+void postordertraversal(struct node* root) {
     if (root != NULL) {
-        postorderTraversal(root->left);
-        postorderTraversal(root->right);
+        postordertraversal(root->left);
+        postordertraversal(root->right);
         printf("%d ", root->data);
     }
 }
 
 int main() {
-    struct Node* root = NULL;
+    struct node* root = NULL;
     int n, key;
 
     printf("Enter the number of nodes: ");
@@ -65,15 +65,15 @@ int main() {
         root = insert(root, key);
     }
     printf("Inorder Traversal: ");
-    inorderTraversal(root);
+    inordertraversal(root);
     printf("\n");
 
     printf("Preorder Traversal: ");
-    preorderTraversal(root);
+    preordertraversal(root);
     printf("\n");
 
     printf("Postorder Traversal: ");
-    postorderTraversal(root);
+    postordertraversal(root);
     printf("\n");
 
     return 0;
